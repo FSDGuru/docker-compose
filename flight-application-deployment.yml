@@ -15,7 +15,7 @@ services:
     image: mongo-express
     restart: always
     ports:
-      - 8081:8081
+      - 8090:8090
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: kobra
       ME_CONFIG_MONGODB_ADMINPASSWORD: fullstack
@@ -99,7 +99,7 @@ services:
       - payment
 
   flight-ui:
-    image: surajk1995/angularproject
+    image: surajk1995/flightbookingui:3.0
     restart: always
     ports:
       - 80:80
