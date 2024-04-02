@@ -9,82 +9,82 @@ services:
     volumes:
       - mongo-data:/data/db
     ports:
-      - 27018:27017
-
+      - 27017:27017
+ 
   mongo-express:
     image: mongo-express
     restart: always
     ports:
-      - 8090:8090
+      - 8090:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: kobra
       ME_CONFIG_MONGODB_ADMINPASSWORD: fullstack
       ME_CONFIG_MONGODB_SERVER: mongo
     depends_on:
       - mongo
-
+ 
   eureka:
-    image: surajk1995/eureka:3.0
+    image: surajk1995/eureka:5.0
     restart: always
     ports:
       - 8761:8761
-
+ 
   flightsearch:
-    image: surajk1995/flightsearch:3.0
+    image: surajk1995/flightsearch:5.0
     restart: always
     ports:
-      - 8081:8081
+      - 8581:8581
     depends_on:
       - eureka
       - mongo
-
+ 
   flightbooking:
-    image: surajk1995/flightbooking:3.0
+    image: surajk1995/flightbooking:5.0
     restart: always
     ports:
       - 8082:8082
     depends_on:
       - eureka
       - mongo
-
+ 
   checkin:
-    image: surajk1995/checkin:3.0
-    restart: always
-    ports:
-      - 8083:8083
-    depends_on:
-      - eureka
-      - mongo
-
-  payment:
-    image: surajk1995/payment:3.0
+    image: surajk1995/checkin:5.0
     restart: always
     ports:
       - 8084:8084
     depends_on:
       - eureka
       - mongo
-
+ 
+  payment:
+    image: surajk1995/payment:5.0
+    restart: always
+    ports:
+      - 8083:8083
+    depends_on:
+      - eureka
+      - mongo
+ 
   admin:
-    image: surajk1995/admin:3.0
+    image: surajk1995/admin:5.0
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - eureka
+      - mongo
+    
+  security:
+    image: surajk1995/security:5.0
     restart: always
     ports:
       - 8085:8085
     depends_on:
       - eureka
       - mongo
-    
-  security:
-    image: surajk1995/security:3.0
-    restart: always
-    ports:
-      - 8086:8086
-    depends_on:
-      - eureka
-      - mongo
-
+ 
   gateway:
-    image: surajk1995/gateway:3.0
+    image: surajk1995/gateway:5.0
     restart: always
     ports:
       - 8888:8888
@@ -97,12 +97,12 @@ services:
       - admin
       - security
       - payment
-
+ 
   flight-ui:
-    image: surajk1995/flightbookingui:3.0
+    image: surajk1995/flightbookingui:10.0
     restart: always
     ports:
-      - 80:80
-
+      - 8081:80
+ 
 volumes:
   mongo-data:
